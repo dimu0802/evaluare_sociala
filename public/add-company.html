@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Adaugă Firmă</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="title">Impact Breakdown</div>
+  </header>
+
+  <main class="form-page">
+    <h2>Înregistrează o firmă</h2>
+    <form id="companyForm">
+      <label>Nume firmă:</label><br>
+      <input type="text" id="name" required><br><br>
+
+      <label>Domeniu:</label><br>
+      <select id="domain" required>
+        <option value="">Alege domeniu...</option>
+      </select><br><br>
+
+      <label>Descriere:</label><br>
+      <textarea id="description" rows="4" required></textarea><br><br>
+
+      <button type="submit">Trimite</button>
+    </form>
+
+    <p id="resultMsg"></p>
+  </main>
+
+  <script src="js/add-company.js"></script>
+</body>
+</html>

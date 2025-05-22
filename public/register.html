@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Înregistrare</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="title">Impact Breakdown</div>
+  </header>
+
+  <main class="register-page">
+    <h2>Înregistrare</h2>
+    <form id="registerForm">
+      <label>Nume utilizator:</label><br>
+      <input type="text" id="username" required><br><br>
+
+      <label>Email:</label><br>
+      <input type="email" id="email" required><br><br>
+
+      <label>Parolă:</label><br>
+      <input type="password" id="password" required><br><br>
+
+      <label>Gen:</label><br>
+      <select id="gender" required>
+        <option value="">Selectează...</option>
+        <option value="male">Bărbat</option>
+        <option value="female">Femeie</option>
+      </select><br><br>
+
+      <label><input type="checkbox" id="isOwner"> Am o firmă (vreau să o înregistrez)</label><br><br>
+
+      <button type="submit">Creează cont</button>
+    </form>
+
+    <p id="registerMessage" style="color: red;"></p>
+  </main>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

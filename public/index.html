@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Impact Breakdown</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="title">Impact Breakdown</div>
+    <div class="nav-buttons">
+      <span id="loginStatus" class="user-status"></span>
+      <button id="logoutBtn" style="display: none;">Logout</button>
+      <div class="nav-buttons" id="navArea"></div>
+    </div>
+  </header>
+
+  <!-- BARĂ CĂUTARE + FILTRU -->
+  <section class="search-filter">
+    <input type="text" id="searchInput" placeholder="Caută firmă după nume...">
+    <select id="filterDomain">
+        <option value="">Toate domeniile</option>
+    </select>
+    <button onclick="searchCompanies()">Caută</button>
+  </section>
+
+  <!-- CONȚINUT PRINCIPAL -->
+  <main class="main-content">
+    <!-- Lista companii -->
+    <div class="company-list">
+      <h2>Companii</h2>
+      <div id="companyList">
+        <p><i>Momentan nu sunt companii încărcate.</i></p>
+      </div>
+    </div>
+
+    <div id="addCompanyWrapper"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

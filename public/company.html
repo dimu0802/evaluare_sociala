@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalii Companie</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/company.css">
+</head>
+<body>
+  <header>
+    <div class="title">Impact Breakdown</div>
+    <div class="nav-buttons">
+      <a href="index.html">Home</a>
+    </div>
+  </header>
+
+  <main class="company-details">
+    <h1 id="companyName">[Nume companie]</h1>
+    <p><strong>Domeniu:</strong> <span id="companyDomain"></span></p>
+    <p><strong>Descriere:</strong> <span id="companyDescription"></span></p>
+    <hr>
+
+    <h2>Scor mediu</h2>
+    <p id="companyAverage">[calculând...]</p>
+
+    <button id="aiFeedbackBtn" class="ai-btn">Sugestie AI</button>
+    <div id="aiFeedbackResult" class="ai-feedback" style="display: none;"></div>
+    <h2>Adaugă un review</h2>
+    <div id="reviewFormContainer"></div>
+
+    <h2>Review-uri</h2>
+    <div id="reviewList">
+      <p><i>Momentan nu sunt review-uri.</i></p>
+    </div>
+  </main>
+
+  <script src="js/company.js"></script>
+</body>
+</html>

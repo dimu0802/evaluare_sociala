@@ -1,0 +1,133 @@
+.company-details {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  .company-details h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+  
+  .company-details p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  #companyAverage {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0 30px 0;
+  }
+  
+  /* box */
+  .review-box {
+    background-color: white;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+  
+  .review-box strong {
+    color: #2c3e50;
+  }
+  
+  .review-box em {
+    display: block;
+    margin-top: 6px;
+    color: #555;
+  }
+  
+  /*adaugare review*/
+  .review-form {
+    background-color: #fdfdfd;
+    padding: 25px;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    margin: 40px 0 30px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+  }
+  
+  .review-form:hover {
+    transform: scale(1.01);
+  }
+  
+  .review-form label {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .review-form select,
+  .review-form textarea,
+  .review-form button {
+    width: 100%;
+    font-size: 15px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .review-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .review-form button {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .review-form button:hover {
+    background-color: #2980b9;
+  }
+  
+  .user-status {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  /*buton sugestie ai*/
+  .ai-btn {
+    padding: 14px 24px;
+    font-size: 16px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 30px;
+  }
+  
+  .ai-btn:hover {
+    background-color: #1f6390;
+  }
+  
+  .ai-feedback {
+    background-color: #fefefe;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 4px solid #3498db;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  
+  .ai-feedback h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  
+  .ai-feedback p {
+    margin: 10px 0 0 0;
+    line-height: 1.6;
+    color: #444;
+  }
