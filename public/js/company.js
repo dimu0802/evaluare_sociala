@@ -1,27 +1,23 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const companyId = getCompanyIdFromUrl();
+    const companyId = getCompanyIdFromUrl(); 
     if (!companyId) {
       alert("ID companie lipsă din URL");
       return;
     }
 
-
-  
     await loadCompanyDetails(companyId);
-
     await renderReviewForm(companyId);
-
     await loadCompanyReviews(companyId);
   });
   
-  function getCompanyIdFromUrl() {
+  function getCompanyIdFromUrl() { //cauta id in url
     const params = new URLSearchParams(window.location.search);
     return params.get("id");
   }
   
   async function loadCompanyDetails(id) {
     try {
-      const response = await fetch(`http://localhost:3001/api/companies/${id}`);
+      const response = await fetch(`http://localhost:3001/api/companies/${id}`); //trimite cerere get la backend
       const company = await response.json();
   
       document.getElementById("companyName").textContent = company.name;
@@ -34,36 +30,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   
   async function loadCompanyReviews(id) {
-    const reviewContainer = document.getElementById("reviewList");
+    const reviewContainer = document.getElementById("reviewList"); // gaseste te divul din pagina unde vor fi afisate reviews
   
     try {
-      const response = await fetch(`http://localhost:3001/api/companies/${id}/reviews`);
-      const reviews = await response.json();
+      const response = await fetch(`http://localhost:3001/api/companies/${id}/reviews`); // cere lista de reviews a companiei
+      const reviews = await response.json(); //transforma rasp in json
   
-      // Afișează media ratingului
       if (reviews.length > 0) {
-        const total = reviews.reduce((sum, r) => sum + r.rating, 0);
-        const average = (total / reviews.length).toFixed(2);
-        document.getElementById("companyAverage").textContent = `${average} / 5`;
+        const total = reviews.reduce((sum, r) => sum + r.rating, 0); //face suma reviewurilor
+        const average = (total / reviews.length).toFixed(2); // face media si rotunjeste la 2
+        document.getElementById("companyAverage").textContent = `${average} / 5`; //afiseaza
       } else {
         document.getElementById("companyAverage").textContent = "Fără review-uri momentan.";
       }
   
-      // Afișează lista review-urilor
-      if (reviews.length === 0) {
+      if (reviews.length === 0) { //ce afiseaza daca nu exista review uri
         reviewContainer.innerHTML = "<p><i>Momentan nu sunt review-uri.</i></p>";
         return;
       }
 
       reviewContainer.innerHTML = "";
-      reviews.forEach(r => {
+      reviews.forEach(r => { //pt fiecare review creeaza un div cu clasa review-box
         const div = document.createElement("div");
         div.classList.add("review-box");
         div.innerHTML = `
             <strong>${r.username}</strong> a dat nota <strong>${r.rating}</strong> firmei:
             <em>"${r.comment}"</em>
         `;
-        reviewContainer.appendChild(div);
+        reviewContainer.appendChild(div); //adauga div-ul in DOM
 
       });
     } catch (err) {
@@ -73,20 +67,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function renderReviewForm(companyId) {
-    const container = document.getElementById("reviewFormContainer");
+    const container = document.getElementById("reviewFormContainer"); // cauta in DOM containerul in care se va pune fie formularul de review, daca esti logat, fie un mesaj sa te loghezi
     const userId = localStorage.getItem("user_id");
   
-    if (!userId) {
+    if (!userId) { //afiseaza mesaj daca user nu e logat
       container.innerHTML = `
         <div class="not-logged-box">
           <p>
-            🔒 Trebuie să fii <a href="login.html">autentificat</a> pentru a lăsa un review.
+            Trebuie să fii <a href="login.html">autentificat</a> pentru a lăsa un review.
           </p>
         </div>
       `;
       return;
     }
   
+    //meniu dropdown ot nota + camp de comentariu + buton trimitere
     container.innerHTML = `
       <form id="reviewForm" class="review-form">
         <label for="rating">Nota (1–5):</label>
@@ -106,13 +101,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       </form>
     `;
   
+
     document.getElementById("reviewForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+      e.preventDefault(); //previne comportament drfault (ii spui: "nu trimite tu in stil clasic") stil clasic-se schimba pagina sau se reincarca
+
+      //obtine nota si comentariul
       const rating = parseInt(document.getElementById("rating").value);
       const comment = document.getElementById("comment").value.trim();
   
       if (!rating || !comment) return;
   
+      //trimite datele catre backend
       try {
         const res = await fetch("http://localhost:3001/api/reviews", {
           method: "POST",
@@ -125,6 +124,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           })
         });
   
+        //mesaje de afisare daca s a trimis
         if (res.ok) {
           alert("Review adăugat cu succes!");
           await loadCompanyReviews(companyId);
@@ -138,13 +138,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
   
+  //cand utilizatorul apasa butonul, se executa fct de mai jos
   document.getElementById("aiFeedbackBtn").addEventListener("click", async () => {
+    //obtine compania si locul unde se va afisa review ul
     const companyId = getCompanyIdFromUrl();
     const resultDiv = document.getElementById("aiFeedbackResult");
   
     resultDiv.style.display = "block";
     resultDiv.innerHTML = "<em>Analizăm review-urile, te rugăm așteaptă...</em>";
   
+    //trimite cerere catre backend
     try {
       const res = await fetch(`http://localhost:3001/api/ai-feedback/${companyId}`, {
         method: "POST"
@@ -152,6 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
       if (!res.ok) throw new Error("Cererea a eșuat");
   
+      //extrage si afiseaza sugestia aix
       const data = await res.json();
       resultDiv.innerHTML = `
         <h3>Sugestii AI pentru îmbunătățire</h3>

@@ -3,13 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!form) return;
   
     form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // previne reincarc paginii
   
+      //ia valorile din formular
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const message = document.getElementById("loginMessage");
   
-      try {
+      try { //trimite cerere post catre api/login
         const response = await fetch("http://localhost:3001/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -21,11 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
   
+        //daca login reuseste, salveaza datele in localStorage
         const data = await response.json();
         localStorage.setItem("user_id", data.id);
         localStorage.setItem("username", data.username);
         localStorage.setItem("is_owner", data.is_owner);
-        window.location.href = "index.html";
+        window.location.href = "index.html"; //redirectioneaza user spre main page
       } catch (err) {
         console.error("Eroare la logare:", err);
         message.textContent = "Eroare la conectare.";
@@ -34,9 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
   document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("registerForm");
+    const form = document.getElementById("registerForm"); //gaseste formularul de inscriere
     if (!form) return;
   
+    //obtine toate valorile din formular
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
   
@@ -46,8 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const gender = document.getElementById("gender").value;
       const is_owner = document.getElementById("isOwner").checked;
   
-      const message = document.getElementById("registerMessage");
+      const message = document.getElementById("registerMessage"); //
   
+      //trimite cerere post la backend cu toate datele
       try {
         const res = await fetch("http://localhost:3001/api/register", {
           method: "POST",
@@ -61,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
   
+        //salveaza user ul in localstorage si il redirectioneaza la homepage
         const data = await res.json();
         localStorage.setItem("user_id", data.id);
         localStorage.setItem("username", username);
