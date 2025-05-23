@@ -1,4 +1,15 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
+  const userId = localStorage.getItem("user_id");
+  const isOwner = localStorage.getItem("is_owner") === "true";
+
+  if (!userId || !isOwner) {
+    alert("Acces interzis. Trebuie să fii logat ca proprietar.");
+    window.location.href = "index.html";
+    return;
+  }
+});
+
+document.addEventListener("DOMContentLoaded", async () => { 
     const domainSelect = document.getElementById("domain");
   
     // încarcă domeniile
@@ -20,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const description = document.getElementById("description").value.trim();
       const user_id = parseInt(localStorage.getItem("user_id"));
   
+      //trimite cerere post catre backend
       const response = await fetch("http://localhost:3001/api/companies", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         resultMsg.style.color = "green";
         document.getElementById("companyForm").reset();
       } else {
-        resultMsg.textContent = "Eroare la adăugare firmă.";
+        resultMsg.textContent = "Trebuie sa fiti proprietar ca sa adaugati o firma";
         resultMsg.style.color = "red";
       }
     });
