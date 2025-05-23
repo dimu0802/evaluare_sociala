@@ -10,28 +10,22 @@ const { OpenAI } = require("openai");
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const app = express();
-const PORT = 3001; // schimbă dacă 3000 e ocupat
+const PORT = 3001;
 
 const pool = new Pool({
     user: 'dimu',
     host: 'localhost',
+    password: process.env.DB_PASSWORD,
     database: 'evaluare_sociala',
-    password: '#.#DIMUp080204',
     port: 5432,
   });
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// Servește fișierele statice din /public
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Test simplu
-app.get('/api/ping', (req, res) => {
-  res.json({ message: 'Serverul merge!' });
-});
 
-// Ruta pentru obținerea companiilor (toate sau filtrate)
 app.get('/api/companies', async (req, res) => {
     const { name, domain } = req.query;
   
@@ -69,7 +63,6 @@ app.get('/api/companies', async (req, res) => {
     }
   });
 
-  // Ruta pentru detalii despre o companie
 app.get('/api/companies/:id', async (req, res) => {
     const companyId = req.params.id;
   
@@ -90,7 +83,6 @@ app.get('/api/companies/:id', async (req, res) => {
     }
   });
   
-  // Ruta pentru review-urile unei companii
   app.get('/api/companies/:id/reviews', async (req, res) => {
     const companyId = req.params.id;
   
@@ -141,7 +133,7 @@ app.get('/api/companies/:id', async (req, res) => {
     const { username, email, password, gender, is_owner } = req.body;
   
     try {
-      const hashedPassword = await bcrypt.hash(password, 10); // 10 = salt rounds
+      const hashedPassword = await bcrypt.hash(password, 10);
   
       const result = await pool.query(
         'INSERT INTO users (username, email, password_hash, gender, is_owner) VALUES ($1, $2, $3, $4, $5) RETURNING id',
@@ -176,7 +168,7 @@ app.get('/api/companies/:id', async (req, res) => {
     const companyId = req.params.companyId;
   
     try {
-      // 1. Obținem toate review-urile companiei
+
       const result = await pool.query(`
         SELECT r.rating, r.comment, u.username
         FROM reviews r
@@ -189,12 +181,10 @@ app.get('/api/companies/:id', async (req, res) => {
         return res.status(400).json({ message: 'Compania nu are încă review-uri.' });
       }
   
-      // 2. Formăm promptul
       const prompt = `Evaluează aceste review-uri și sugerează ce ar putea îmbunătăți compania:\n\n` +
         reviews.map(r => `- [${r.rating}/5] ${r.comment}`).join("\n") +
         `\n\nRăspunde în română, clar și obiectiv.`;
   
-      // 3. Trimitem la OpenAI
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],
